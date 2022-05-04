@@ -1,0 +1,37 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.climatempo.com.br/previsao-do-tempo/15-dias/cidade/7331/lisboa-pt"
+
+response = requests.get(url)
+site = BeautifulSoup(response.text, 'html.parser')
+temp_real1 = site.find(attrs={'class': '-gray _flex _margin-l-5'}).find_all('span')[1]
+temp_real2 = site.find(attrs={'class': '-gray _flex _margin-l-5'}) .find_all('span')[0]
+
+Max = temp_real1.text[:-1]
+Min = temp_real2.text[:-1]
+maax = int(Max)
+miin = int(Min)
+print("**************************************************************")
+print("Voce esta na cidade de Lisboa \nConfira a previsão para hoje.")
+if maax >= 0 and maax <=10:
+    print("**************************************************************")
+    print("Hoje a minima é de {}".format(temp_real2.text))
+    print("Esta fazendo {}, pegue um casaco e corra pro cobertor !".format(temp_real1.text))
+    print("**************************************************************")
+elif maax >= 11 and maax <=20:
+    print("**************************************************************")
+    print("Hoje a minima é de {}".format(temp_real2.text))
+    print("Esta fazendo {}, pegue um casaco leve e fique tranquilo!".format(temp_real1.text))
+    print("**************************************************************")
+elif maax >=21 and maax <= 30:
+    print("**************************************************************")
+    print("Hoje a minima é de {}".format(temp_real2.text))
+    print("Calor do carai, fazendo {}, pegue sua Super Bock e vamos pra praia!".format(temp_real1.text))
+    print("**************************************************************")
+else:
+    print("**************************************************************")
+    print("esta fazendo{}, com a minima de {} isso ta certo ?".format(temp_real1.text, temp_real2.text))
+    print("**************************************************************")
+
+
